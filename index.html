@@ -85,16 +85,44 @@
   }
 
   @keyframes floatA {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(60px, 80px) scale(1.1); }
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(60px, 80px) scale(1.1); }
+    66%  { transform: translate(20px, 30px) scale(1.04); }
+    100% { transform: translate(0, 0) scale(1); }
   }
   @keyframes floatB {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-70px, 50px) scale(0.95); }
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(-70px, 50px) scale(0.95); }
+    66%  { transform: translate(-25px, 90px) scale(1.03); }
+    100% { transform: translate(0, 0) scale(1); }
   }
   @keyframes floatC {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(40px, -60px) scale(1.08); }
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(40px, -60px) scale(1.08); }
+    66%  { transform: translate(70px, -10px) scale(0.97); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  /* Entrance animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .avatar {
+    opacity: 0;
+    animation: fadeInUp 0.9s ease-out 0.1s forwards;
+  }
+
+  h1 {
+    opacity: 0;
+    animation: fadeInUp 0.9s ease-out 0.3s forwards;
   }
 
   .page {
@@ -327,6 +355,7 @@
   }
 
   .contact-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -341,12 +370,19 @@
     border: 1px solid rgba(255,255,255,0.4);
     cursor: pointer;
     box-shadow: 0 10px 30px rgba(157, 215, 255, 0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.35s ease, box-shadow 0.45s ease, background 0.45s ease, border-color 0.45s ease;
   }
 
   .contact-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 14px 36px rgba(157, 215, 255, 0.4);
+    background: linear-gradient(135deg, rgba(157, 215, 255, 1), rgba(201, 167, 255, 1));
+    border-color: rgba(255,255,255,0.7);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 0 40px 6px rgba(157, 215, 255, 0.55), 0 16px 40px rgba(157, 215, 255, 0.35);
+  }
+
+  .contact-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 0 24px 3px rgba(157, 215, 255, 0.45), 0 8px 22px rgba(157, 215, 255, 0.3);
   }
 
   .contact-email {
