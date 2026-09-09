@@ -121,3 +121,118 @@
     useCoords(FALLBACK.lat, FALLBACK.lon, FALLBACK.name);
   }
 })();
+
+// 3D tilt + moving light highlight on glass cards
+(function () {
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (prefersReducedMotion || !canHover) return;
+
+  function attachTilt(el, maxTilt, lift) {
+    function handleMove(e) {
+      var rect = el.getBoundingClientRect();
+      var relX = (e.clientX - rect.left) / rect.width;
+      var relY = (e.clientY - rect.top) / rect.height;
+      var rotateY = (relX - 0.5) * maxTilt * 2;
+      var rotateX = (0.5 - relY) * maxTilt * 2;
+
+      el.style.transform =
+        'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) ' +
+        'rotateY(' + rotateY.toFixed(2) + 'deg) translateY(' + (-lift) + 'px)';
+      el.style.setProperty('--mx', (relX * 100).toFixed(1) + '%');
+      el.style.setProperty('--my', (relY * 100).toFixed(1) + '%');
+    }
+
+    function handleEnter() {
+      el.classList.add('is-tilting');
+      el.addEventListener('mousemove', handleMove);
+    }
+
+    function handleLeave() {
+      el.classList.remove('is-tilting');
+      el.removeEventListener('mousemove', handleMove);
+      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+    }
+
+    el.addEventListener('mouseenter', handleEnter);
+    el.addEventListener('mouseleave', handleLeave);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.glass'), function (el) {
+    attachTilt(el, 3.5, 0);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.service-card'), function (el) {
+    attachTilt(el, 8, 6);
+  });
+})();
+
+// Bokeh shapes drift away from the cursor as it moves nearby
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var wraps = Array.prototype.slice.call(document.querySelectorAll('.bokeh-wrap'));
+  if (!wraps.length) return;
+
+  var REACT_RADIUS = 320;
+  var MAX_PUSH = 26;
+  var EASE = 0.07;
+
+  var state = wraps.map(function () {
+    return { cx: 0, cy: 0, curX: 0, curY: 0, tgtX: 0, tgtY: 0 };
+  });
+
+  var mouseX = -9999;
+  var mouseY = -9999;
+
+  function measure() {
+    wraps.forEach(function (wrap, i) {
+      var rect = wrap.getBoundingClientRect();
+      state[i].cx = rect.left + rect.width / 2 - state[i].curX;
+      state[i].cy = rect.top + rect.height / 2 - state[i].curY;
+    });
+  }
+
+  measure();
+  window.addEventListener('resize', measure);
+
+  window.addEventListener('mousemove', function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', function () {
+    mouseX = -9999;
+    mouseY = -9999;
+  });
+
+  function tick() {
+    state.forEach(function (s) {
+      var dx = s.cx - mouseX;
+      var dy = s.cy - mouseY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < REACT_RADIUS) {
+        var factor = 1 - dist / REACT_RADIUS;
+        var len = dist || 1;
+        s.tgtX = (dx / len) * factor * MAX_PUSH;
+        s.tgtY = (dy / len) * factor * MAX_PUSH;
+      } else {
+        s.tgtX = 0;
+        s.tgtY = 0;
+      }
+
+      s.curX += (s.tgtX - s.curX) * EASE;
+      s.curY += (s.tgtY - s.curY) * EASE;
+    });
+
+    wraps.forEach(function (wrap, i) {
+      wrap.style.transform =
+        'translate(' + state[i].curX.toFixed(1) + 'px, ' + state[i].curY.toFixed(1) + 'px)';
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
