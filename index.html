@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felipe Bernal Castilla — Consultant, Research &amp; Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.10);
+    --glass-bg-strong: rgba(255, 255, 255, 0.16);
+    --glass-border: rgba(255, 255, 255, 0.22);
+    --text-primary: #f5f7fb;
+    --text-secondary: rgba(245, 247, 251, 0.72);
+    --accent: #9dd7ff;
+    --accent-2: #c9a7ff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+
+  body {
+    position: relative;
+    background: linear-gradient(-45deg, #0f1024, #1b1440, #0e2340, #241f4d, #101a3a);
+    background-size: 400% 400%;
+    animation: gradientShift 22s ease infinite;
+    min-height: 100vh;
+  }
+
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Bokeh blurred shapes */
+  .bokeh {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+  }
+
+  .bokeh-1 {
+    width: 420px; height: 420px;
+    top: -100px; left: -80px;
+    background: radial-gradient(circle at 30% 30%, #7fd8ff, transparent 70%);
+    animation: floatA 26s ease-in-out infinite;
+  }
+  .bokeh-2 {
+    width: 340px; height: 340px;
+    top: 30%; right: -120px;
+    background: radial-gradient(circle at 40% 40%, #c9a7ff, transparent 70%);
+    animation: floatB 32s ease-in-out infinite;
+  }
+  .bokeh-3 {
+    width: 300px; height: 300px;
+    bottom: -80px; left: 15%;
+    background: radial-gradient(circle at 50% 50%, #ff9ec4, transparent 70%);
+    animation: floatC 28s ease-in-out infinite;
+  }
+  .bokeh-4 {
+    width: 260px; height: 260px;
+    bottom: 10%; right: 10%;
+    background: radial-gradient(circle at 50% 50%, #9dffd9, transparent 70%);
+    animation: floatA 34s ease-in-out infinite reverse;
+  }
+  .bokeh-5 {
+    width: 220px; height: 220px;
+    top: 55%; left: 45%;
+    background: radial-gradient(circle at 50% 50%, #ffe29e, transparent 70%);
+    animation: floatB 24s ease-in-out infinite;
+  }
+
+  @keyframes floatA {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 80px) scale(1.1); }
+  }
+  @keyframes floatB {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-70px, 50px) scale(0.95); }
+  }
+  @keyframes floatC {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -60px) scale(1.08); }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Header */
+  header.glass {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    padding: 44px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .avatar {
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 0 0 6px rgba(255,255,255,0.05), 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .header-text { flex: 1; min-width: 240px; }
+
+  .eyebrow {
+    font-weight: 100;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: clamp(30px, 4.5vw, 46px);
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.05;
+  }
+
+  .role {
+    font-weight: 100;
+    font-size: 19px;
+    color: var(--text-secondary);
+    margin: 0 0 4px;
+  }
+
+  .location {
+    font-weight: 100;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.8;
+  }
+
+  /* Sections */
+  section.glass {
+    padding: 40px 44px;
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 22px;
+  }
+
+  .about-text {
+    font-weight: 100;
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text-secondary);
+    margin: 0 0 22px;
+  }
+
+  .about-text:last-child { margin-bottom: 0; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 28px;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 18px 10px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .stat-num {
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-weight: 100;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  /* Services grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    padding: 26px;
+    border-radius: 16px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    transition: transform 0.35s ease, background 0.35s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.20);
+  }
+
+  .service-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 0 0 10px;
+    color: var(--text-primary);
+  }
+
+  .service-desc {
+    font-weight: 100;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* Skills tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .tag {
+    font-weight: 200;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: var(--text-secondary);
+  }
+
+  /* Industries */
+  .industries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .industry {
+    font-weight: 100;
+    font-size: 13px;
+    padding: 7px 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    color: var(--text-secondary);
+  }
+
+  /* Contact */
+  .contact-section {
+    text-align: center;
+    padding: 56px 44px;
+  }
+
+  .contact-title {
+    font-weight: 700;
+    font-size: 26px;
+    margin: 0 0 12px;
+  }
+
+  .contact-sub {
+    font-weight: 100;
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0 0 34px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 42px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(157, 215, 255, 0.9), rgba(201, 167, 255, 0.9));
+    color: #10122a;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(157, 215, 255, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(157, 215, 255, 0.4);
+  }
+
+  .contact-email {
+    display: block;
+    margin-top: 22px;
+    font-weight: 100;
+    font-size: 14px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px 24px 40px;
+    font-weight: 100;
+    font-size: 12px;
+    color: rgba(245, 247, 251, 0.4);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 560px) {
+    header.glass { padding: 32px 24px; }
+    section.glass { padding: 30px 24px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bokeh bokeh-1"></div>
+  <div class="bokeh bokeh-2"></div>
+  <div class="bokeh bokeh-3"></div>
+  <div class="bokeh bokeh-4"></div>
+  <div class="bokeh bokeh-5"></div>
+
+  <div class="page">
+
+    <!-- Header -->
+    <header class="glass">
+      <div class="avatar">
+        <img src="assets/profile.jpg" alt="Felipe Bernal Castilla">
+      </div>
+      <div class="header-text">
+        <p class="eyebrow">Consultant · Research &amp; Insights</p>
+        <h1>Felipe Bernal Castilla</h1>
+        <p class="role">Mixed-Methods Researcher &amp; Behavioral Science Consultant</p>
+        <p class="location">MSc Neuroscience, King's College London · Latin America</p>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section class="glass">
+      <p class="section-title">About Me</p>
+      <p class="about-text">
+        I'm a mixed-methods researcher with 7 years of experience and a strong foundation in behavioral science
+        and applied neuroscience. I specialize in research designs that combine qualitative depth with advanced
+        quantitative rigor — regression, predictive modeling, and longitudinal analysis — to translate complex,
+        multi-source research into clear strategic direction for enterprise and institutional stakeholders.
+      </p>
+      <p class="about-text">
+        I've led multi-country engagements across Latin America, delivering digital maturity diagnostics,
+        behavioral and consumer/UX insights research, and AI-assisted research tooling across sectors including
+        financial services, healthcare, energy, higher education, and more.
+      </p>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num">7+</span>
+          <span class="stat-label">Years of Experience</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">40+</span>
+          <span class="stat-label">Organizations Assessed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">25+</span>
+          <span class="stat-label">Behavioral &amp; UX Projects</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services / Expertise -->
+    <section class="glass">
+      <p class="section-title">Services &amp; Expertise</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <p class="service-title">Organizational &amp; Maturity Diagnostics</p>
+          <p class="service-desc">Proprietary digital maturity models applied across financial services, energy,
+            healthcare, industrial automation, and construction, with prioritized action roadmaps.</p>
+        </div>
+        <div class="service-card">
+          <p class="service-title">Behavioral, Consumer &amp; UX Insights Research</p>
+          <p class="service-desc">Synthetic data, eye-tracking, PANAS scoring, NLP sentiment analysis, and structured
+            usability testing to optimize conversion and digital experience.</p>
+        </div>
+        <div class="service-card">
+          <p class="service-title">Quantitative &amp; Research Methodology</p>
+          <p class="service-desc">Experimentation and causal testing, choice modeling, behavioral segmentation,
+            predictive and Bayesian modeling, longitudinal and Markov-based journey analysis.</p>
+        </div>
+        <div class="service-card">
+          <p class="service-title">Applied AI Research Tooling</p>
+          <p class="service-desc">LLM-assisted synthetic-persona platforms, curriculum-alignment models, and
+            AI-driven insight generation to support decision-making.</p>
+        </div>
+      </div>
+
+      <div class="tags">
+        <span class="tag">Mixed-Methods Research</span>
+        <span class="tag">Predictive Analytics</span>
+        <span class="tag">AI Adoption Research</span>
+        <span class="tag">Conversion &amp; Funnel Research</span>
+        <span class="tag">Behavioral Insight Research</span>
+        <span class="tag">Statistical Rigor</span>
+        <span class="tag">Executive Insight Translation</span>
+        <span class="tag">Synthetic Data &amp; AI-Assisted Synthesis</span>
+      </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="glass">
+      <p class="section-title">Industries</p>
+      <div class="industries">
+        <span class="industry">Financial Services</span>
+        <span class="industry">Healthcare &amp; Life Sciences</span>
+        <span class="industry">Energy &amp; Industrial Automation</span>
+        <span class="industry">Oil &amp; Gas</span>
+        <span class="industry">Real Estate &amp; Construction</span>
+        <span class="industry">Agribusiness &amp; Food/Beverage</span>
+        <span class="industry">Fashion &amp; Apparel Manufacturing</span>
+        <span class="industry">Higher Education</span>
+        <span class="industry">Technology / Software</span>
+        <span class="industry">Social Impact / NGO / Diplomacy</span>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="glass contact-section">
+      <p class="contact-title">Let's Work Together</p>
+      <p class="contact-sub">
+        Looking to turn complex research into clear strategic decisions? Let's talk.
+      </p>
+      <a class="contact-btn" href="#">Contact Me</a>
+      <span class="contact-email">felipe.bernal@professional consulting.com</span>
+    </section>
+
+  </div>
+
+  <footer>
+    © 2026 Felipe Bernal Castilla — Consultant, Research &amp; Insights
+  </footer>
+
+</body>
+</html>
